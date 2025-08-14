@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chips Amazonas - Apresentação de Produtos</title>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container" x-data="productApp()">
+        <h1>Chips Amazonas - Nossos Produtos</h1>
+        <input type="text" x-model="searchTerm" @input="filterProducts" placeholder="Pesquisar produtos..." class="search-bar">
+        <div class="product-grid">
+            <template x-for="product in filteredProducts" :key="product.id">
+                <div class="product-item" :class="{ 'selected': selectedProduct && selectedProduct.id === product.id }" @click="selectProduct(product)">
+                    <img :src="product.image" :alt="product.name" class="product-image">
+                    <h3 x-text="product.name"></h3>
+                    <p>R$ <span x-text="formatPrice(product.price)"></span></p>
+                </div>
+            </template>
+        </div>
+
+        <template x-if="selectedProduct">
+            <div class="product-details">
+                <h2 x-text="selectedProduct.name"></h2>
+                <p>Preço: R$ <span x-text="formatPrice(selectedProduct.price)"></span></p>
+                <p x-text="selectedProduct.description"></p>
+            </div>
+        </template>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
